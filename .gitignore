@@ -3,3 +3,6 @@
 *.zip
 __pycache__/
 lab.py
+*.log
+utils
+todo.txt
