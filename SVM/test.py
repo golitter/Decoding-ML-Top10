@@ -16,8 +16,7 @@ print("Shape of data_mat_in:", np.shape(data_mat_in))
 print("Shape of class_labels:", np.shape(class_labels))
 
 # 将 Y 转换为一维数组（如果它是二维的）
-Y = class_labels.flatten()
-
+Y = class_labels
 # 提取不同类别的索引
 class_1_indices = np.where(Y == 1)[0]  # 类别为 1 的样本索引
 class_2_indices = np.where(Y == -1)[0]  # 类别为 -1 的样本索引
@@ -30,13 +29,17 @@ plt.scatter(X[class_2_indices, 0], X[class_2_indices, 1], c='red', label='Class 
 
 # 计算权重向量 w
 w = np.dot((alphas * Y).T, X).flatten()
+# print(f"w: {w}")
+print("Shape of X:", X.shape)  # 应该是 (m, n)
+print("Shape of Y:", Y.shape)  # 应该是 (m, 1)
+print("Shape of alphas:", alphas.shape)  # 应该是 (m, 1)
 
 # 绘制超平面
 # 超平面方程：w[0] * x1 + w[1] * x2 + b = 0
 # 解出 x2: x2 = -(w[0] * x1 + b) / w[1]
 x1 = np.linspace(np.min(X[:, 0]), np.max(X[:, 0]), 100)
 x2 = -(w[0] * x1 + b) / w[1]
-
+print(f"w_shape: {w.shape}")
 # 绘制超平面
 plt.plot(x1, x2, label='SVM Hyperplane', color='green', linewidth=2)
 
