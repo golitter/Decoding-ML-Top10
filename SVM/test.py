@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 data_mat_in, class_labels = data_processing()
 b, alphas = smoSimple(data_mat_in, class_labels, 0.6, 0.001, 40)
 
+
 # 打印结果
 print('Bias (b):', b)
 print('Non-zero alphas:', alphas[alphas > 0])
