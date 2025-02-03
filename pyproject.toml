@@ -2,7 +2,7 @@
 line-length = 120
 [tool.ruff.lint]
 select = ["E", "F", "W"]  # 启用特定的检查规则
-ignore = ["W191", "W291", "W293"]
+ignore = ["W191"]
 
 [tool.ruff.format]
 quote-style = "single"
