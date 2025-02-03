@@ -5,6 +5,6 @@ select = ["E", "F", "W"]  # 启用特定的检查规则
 ignore = ["W191", "W291", "W293"]
 
 [tool.ruff.format]
-quote-style = "single"
+quote-style = "double"
 indent-style = "tab"
 docstring-code-format = true
