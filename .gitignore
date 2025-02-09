@@ -7,3 +7,5 @@ lab.py
 utils
 todo.txt
 xuexi*.*
+
+.ruff_cache/
