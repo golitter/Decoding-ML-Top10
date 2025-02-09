@@ -1,10 +1,15 @@
-[tool.ruff]
-line-length = 120
+[tool.ruff] # ruff配置 https://docs.astral.sh/ruff/
+line-length = 120 # 代码行长度
+
+
 [tool.ruff.lint]
 select = ["E", "F", "W"]  # 启用特定的检查规则
-ignore = ["W191"]
+fixable = ["ALL"] # 可以自动修复的规则
+ignore = ["W191"] # 忽略的规则
+# W191 Indentation contains tabs
+
 
 [tool.ruff.format]
-quote-style = "single"
-indent-style = "tab"
-docstring-code-format = true
+quote-style = "single" # 引号风格
+indent-style = "tab" # 缩进风格
+docstring-code-format = true # 文档字符串代码格式化
