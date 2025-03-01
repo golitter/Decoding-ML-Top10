@@ -1,5 +1,5 @@
-:: GB2312编码
-:: 用于打开机器学习笔记 
-:: 更新日期：2025年2月9日
+:: GB2312 encoding
+:: Used for opening the machine learning notes in PDF format
+:: Update date: 2025.03.01
 @echo off
-start "" ".\机器学习笔记.docx"
+start "" ".\docs\notes.pdf"
