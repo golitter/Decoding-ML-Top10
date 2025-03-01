@@ -1,4 +1,3 @@
-机器学习笔记.docx
 
 *.zip
 __pycache__/
@@ -9,3 +8,10 @@ todo.txt
 xuexi*.*
 
 .ruff_cache/
+
+*.out
+*.aux
+*.log
+*.pdf
+*.synctex.*
+notes.toc
