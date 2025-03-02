@@ -4,6 +4,8 @@
 \usepackage{tocloft}   % 用于控制目录格式（视情况看看是否需要这一行代码）
 \usepackage{amsmath} % 数学公式支持
 \usepackage{graphicx} % 图片支持
+\usepackage{caption}  % 引入 caption 宏包
+
 % https://liam.page/2014/09/08/latex-introduction/ 参考这个网站
 \title{大四下学习笔记}
 \author{杨昊}
@@ -40,7 +42,7 @@
 
 \textbf{在强化学习任务中，学习的目的就是要找到能使长期累积奖赏最大化的策略。}
 \begin{quote}
-强化学习与监督学习来说，强化学习是没有人直接告诉机器在什么状态下应该做什么动作，只有等到最终结果揭晓，才能通过“反思”之前的动作是否正确来进行学习，因此，强化学习在某种意义上可看作具有“延迟标记信息”的监督学习问题。
+    强化学习与监督学习来说，强化学习是没有人直接告诉机器在什么状态下应该做什么动作，只有等到最终结果揭晓，才能通过“反思”之前的动作是否正确来进行学习，因此，强化学习在某种意义上可看作具有“延迟标记信息”的监督学习问题。
 \end{quote}
 \subsubsection{2025年3月1日：评估模型的指标及正则化与交叉验证}
 \noindent\makebox[\linewidth]{\hrulefill\quad 评估模型的指标 \quad\hrulefill}
@@ -100,15 +102,15 @@ $$min_{f \in F} \frac{1}{N} \sum_{i=1}^{n} L(y_i, f(x_i)) + \lambda J(f)$$
 常见的正则方式有
 \begin{itemize}
     \item L1正则化（Lasso）：$J(f) = ||f||_1 = \sum_{i=1}^{n} |w_i|$，即所有参数的绝对值之和。
-        \begin{itemize}
-            \item L1 正则化可以使得模型的参数稀疏化，即许多参数为 0，从而减少模型的复杂度。
-            \item 适用于高位稀疏数据。
-        \end{itemize}
+          \begin{itemize}
+              \item L1 正则化可以使得模型的参数稀疏化，即许多参数为 0，从而减少模型的复杂度。
+              \item 适用于高位稀疏数据。
+          \end{itemize}
     \item L2正则化（Ridge）：$J(f) = ||f||_2^2 = \sum_{i=1}^{n} w_i^2$，即所有参数的平方和。
-        \begin{itemize}
-            \item L2 正则化不会使权重变为 0，而是让它们趋近于 0，使模型更平滑，减少对训练数据的敏感性，提高泛化能力。
-            \item 适用于大部分回归问题。
-        \end{itemize}
+          \begin{itemize}
+              \item L2 正则化不会使权重变为 0，而是让它们趋近于 0，使模型更平滑，减少对训练数据的敏感性，提高泛化能力。
+              \item 适用于大部分回归问题。
+          \end{itemize}
     \item Dropout：在训练过程中，随机将一部分神经元的输出置为 0，从而减少神经元之间的依赖关系，防止过拟合。
     \item 早停（Early Stopping）: 在训练过程中，当验证集上的误差不再下降时，停止训练，防止模型过拟合。
 \end{itemize}
@@ -120,7 +122,60 @@ $$min_{f \in F} \frac{1}{N} \sum_{i=1}^{n} L(y_i, f(x_i)) + \lambda J(f)$$
     \item 留一交叉验证：K 折交叉验证的特例，K 等于数据集的大小。
 \end{itemize}
 
+\subsubsection{2025年3月2日：超参数调优及大模型基本概念}
+\noindent\makebox[\linewidth]{\hrulefill\quad 超参数调优 \quad\hrulefill}
+
+超参数调优是\textbf{机器学习模型训练过程中调整超参数以优化模型性能的过程}。
+超参数是模型在训练前需要手动设定的参数，影响模型的学习能力和泛化能力。
+常见超参数包括：学习率、正则化系数、决策树的最大深度、批量大小等。
+合理的超参数选择可以显著提高模型的泛化能力，使其在新数据上的表现更优。
+超参数调优的方法可分为手动调优和自动调优两大类。
+\begin{itemize}
+    \item 手动调参
+          \begin{itemize}
+              \item 手动调优依赖经验和试错法，适用于简单模型或对模型特性非常熟悉的情况。但手动调参的效率低，容易错过更优的参数组合。
+          \end{itemize}
+    \item 自动调参
+          \begin{table}[h]
+              \centering
+              \begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|} % 适当缩小列宽
+                \hline
+                \textbf{名字} & \textbf{原理} & \textbf{优缺点} \\ 
+                \hline
+                  网格调参（Grid Search） & 设定多个超参数的取值范围，遍历所有可能的组合进行训练，并选择最优结果。 & 可以找到全局最优；但是计算成本高 \\
+                  \hline
+                  随机搜索（Random Search） & 在设定的超参数范围内随机采样部分组合进行训练，而不是穷举所有组合。 & 比网格搜索计算量小；但是不能保证找到最优解 \\
+                  \hline
+                  贝叶斯优化（Bayesian Optimization） & 使用概率模型（如高斯过程）建模超参数对目标函数（如验证集误差）的影响，并通过探索和利用策略选择最优超参数。 & 比随机搜索效率更高效；但是计算成本极高 \\
+                  \hline
+              \end{tabular}
+          \end{table}
+
+\end{itemize}
+
+\noindent\makebox[\linewidth]{\hrulefill\quad 大模型基本概念 \quad\hrulefill}
+大模型（Large Model）是指具有大规模参数和复杂计算结构的机器学习模型。
+
+大语言模型（Large Language Model）：通常是\textbf{具有大规模参数和计算能力的自然语言处理模型}，例如ChatGPT、deepseek。这些模型可以通过大量的数据和参数进行训练，以生成人类类似的文本或回答自然语言的问题。
+
+生成式AI（Generative AI）是指能够生成文字、图片、音频、视频等多种内容的人工智能系统。\textbf{大语言模型（LLM）是生成式 AI 的一种，但生成式 AI 不仅限于语言，还包括图像、视频、音乐等。}
+
+多模态AI（Multimodal AI）进一步扩展了生成式 AI 的能力，使其\textbf{能够处理文本、图像、音频、视频等多种数据类型。}
+
+通用人工智能（AGI：Artificial General Intelligence）指的是能够像人类一样理解、学习和执行多种任务的智能系统。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./images/llmML.png}
+    \caption*{大语言模型机器学习的联系}
+\end{figure}
+大模型的参数很大，例如：LLaMA 2: 7B、13B、65B。\textbf{这里的B是bilion（十亿）的意思}，表示LLaMA2有70亿、130亿、650亿个参数。
+
+在使用大语言模型时，总会看到token一词，调用大模型api是根据token的使用数进行付费。\textbf{大模型的token 并不等同于单词，一个token可能是一个单词、一部分单词，或者一个标点符号。}
+
 \subsection{实践}
+
+
 dff
 \section{有限元分析}
 
