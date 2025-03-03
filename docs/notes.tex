@@ -173,6 +173,50 @@ $$min_{f \in F} \frac{1}{N} \sum_{i=1}^{n} L(y_i, f(x_i)) + \lambda J(f)$$
 
 在使用大语言模型时，总会看到token一词，调用大模型api是根据token的使用数进行付费。\textbf{大模型的token 并不等同于单词，一个token可能是一个单词、一部分单词，或者一个标点符号。}
 
+\subsubsection{2025年3月3日：逻辑斯蒂回归数学推导}
+逻辑斯蒂分布的分布函数：
+$$F(x) = P(X \le x) = \frac{1}{1 + e^{-(x - \mu) / \gamma}}$$
+其中，$\mu$为位置参数，$\gamma$为尺度参数。该函数的形状为 S 型曲线，常用于二分类问题。
+
+二项逻辑斯蒂回归模型由条件概率分布$P(Y|X)$表示，其中随机变量$Y$取值为 0 或 1，随机变量$X$为实数。
+\begin{align}
+    P(Y=1|X) &= \frac{ e^{w \cdot x + b} }{1 + e^{w \cdot X + b}} \\
+    P(Y=0|X) &= 1 - P(Y=1|X)
+\end{align}
+
+几率是指事件发生的概率与不发生的概率之比，即$logit(p) = \frac{p}{1-p}$。逻辑斯蒂回归模型的几率为：
+$$
+log \frac{P(Y=1|X)}{1 - P(Y=1|X)} = w \cdot x + b
+$$
+在逻辑斯蒂回归模型中，输出$Y=1$的对数几率是输入$x$的线性函数。
+
+之后可以采用极大似然法估计模型参数。
+$$
+P(Y=1|x) = \pi(x), P(Y=0|x) = 1 - \pi(x)
+$$
+
+那么似然函数为：
+$$
+\sum_{i=1}^{N} \pi(x_i)^{y_i} (1 - \pi(x_i))^{1-y_i}
+$$
+
+对数似然函数为：
+$$
+L(w) = \sum_{i=1}^{N} y_i log \pi(x_i) + (1 - y_i) log (1 - \pi(x_i))
+$$
+
+对$L(w)$求导，得到$w$的估计值。
+问题转换为以对数似然函数为目标函数的最优化问题。
+学到的逻辑斯蒂回归模型为：
+\begin{align*}
+    P(Y=1|X) &= \frac{ e^{\hat{w} \cdot x + b} }{1 + e^{\hat{w} \cdot X + b}} \\
+    P(Y=0|X) &= 1 - P(Y=1|X)
+\end{align*}
+
+推广为多项逻辑斯蒂回归模型，用于多分类问题：
+$$
+P(Y=k|x) = \frac {e^{w_k \cdot x + b_k}}{\sum_{k=1}^{K} e^{w_k \cdot x + b_k}} , k = 1,2,...,K
+$$
 \subsection{实践}
 
 
