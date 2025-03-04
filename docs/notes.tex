@@ -217,6 +217,39 @@ $$
 $$
 P(Y=k|x) = \frac {e^{w_k \cdot x + b_k}}{\sum_{k=1}^{K} e^{w_k \cdot x + b_k}} , k = 1,2,...,K
 $$
+
+\subsubsection{2025年3月4日：Karpathy的大语言模型介绍}
+2025年3月4日：Karpathy的大语言模型介绍超链接：\href{https://www.bilibili.com/video/BV16cNEeXEer/?spm_id_from=333.337.search-card.all.click&vd_source=13dfbe5ed2deada83969fafa995ccff6}{B站视频链接}。
+
+大模型流程分为：预训练（pre-training）和后训练（post-training）两个阶段。预训练是为了让模型学习到大量的数据，提高模型的泛化能力；后训练是为了让模型适应特定任务，提高模型的性能。
+
+预训练阶段步骤如下：
+\begin{enumerate}
+    \item 下载和处理互联网数据
+    \item 标记化和分词：通过分词器将一维文本序列重新表示为一个token序列的过程。（可以使用https://tiktokenizer.vercel.app/网站查看token）
+    \item 神经网络训练：根据数据集实际发生的统计数据及其概率变得与这些token在数据中如何相互跟随的统计模式一致。\textbf{神经网络参数中的知识是模糊的记忆}。
+    \item 推理：使用预训练的模型生成文本。
+\end{enumerate}
+此时就得到了一个\textbf{基础模型}，可以用于生成文本。它是一个token级互联网文档模拟器，由于是随机生成的，所以每次运行都会得到不一样的内容。
+
+后训练阶段包含\textbf{监督微调SFT}和\textbf{强化学习RL}。监督微调是通过示例文本对模型进行训练，强化学习是通过奖励函数对模型进行训练（练习问题）。
+监督微调创建对话数据，用对话协议进行标记化。强化学习是通过奖励函数对模型进行训练，不依赖人类标注、猜测和检查。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./images/karpathyllm.png}
+\end{figure}
+
+
+\textbf{幻觉}是模型可能出现的一种问题，表现为捏造内容，生成虚假或不存在的信息。
+同时，模型在处理记忆时，可能会出现模糊记忆，即记忆内容不清晰、不准确，与工作记忆形成对比。
+工作记忆是指短期记忆，用于处理和存储当前任务所需的信息。同时，模型对自身的了解和认知，即自我知识，也存在一定的局限性。
+
+在模型的局限性方面，模型需要通过token来思考，这在一定程度上限制了其处理信息的方式。
+模型在计数方面存在困难，不擅长拼写，并且由于是基于token级的模型，导致其无法看到字符。
+
+
+
 \subsection{实践}
 
 
