@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref} % 如果需要超链接功能
+\usepackage{ctex} % 中文支持
+\usepackage{tocloft}   % 用于控制目录格式（视情况看看是否需要这一行代码）
+\usepackage{amsmath} % 数学公式支持
+% https://liam.page/2014/09/08/latex-introduction/ 参考这个网站
+\title{有限元分析}
+\author{杨昊}
+\date{\today}
+\begin{document}
+% 生成标题
+\maketitle
+\thispagestyle{empty}  % 第一页不显示页码
+
+\newpage
+% 生成目录
+\tableofcontents
+
+
+\newpage
+
+% 定义章节编号
+\section{2025年3月11日}
+偏微分方程（Partial Differential Equation）是用来描述某一函数随时间、空间变化的一类方程，通常用于描述物理、工程等领域中的问题。对于2D情况，一般形式如下：
+
+$$
+ a \frac {\partial^2 u} {\partial x^2} + b \frac {\partial^2 u} {\partial x \partial y} + c \frac {\partial^2 u} {\partial y^2} + d \frac {\partial u} {\partial x} + e \frac {\partial u} {\partial y} + f u  + g= 0
+$$
+
+根据判别式$b^2 - 4ac$的正负性，可以将偏微分方程分为三类：
+\begin{itemize}
+    \item 椭圆型：$b^2 - 4ac < 0$。该方程用以描述某种现象朝所有方向发展，强度逐渐衰减，结果是平滑的。
+    \item 双曲型：$b^2 - 4ac > 0$。该方程用以描述某种现象朝特定方向发展，强度倾向于保持不变，结果通常不是平滑的，具有非连续性。
+    \item 抛物型：$b^2 - 4ac = 0$。该方程是一种受限的双曲型，是强度会具有消耗性的双曲线。
+\end{itemize}
+梯度算子$\nabla$是一个向量：$  \nabla = \frac{\partial}{\partial x} \mathbf{i} + \frac{\partial}{\partial y} \mathbf{j} + \frac{\partial}{\partial z} \mathbf{k}$。梯度算子的作用是对一个标量函数求导，得到一个向量。
+
+散度算子$\nabla \cdot$是一个标量：$  \nabla \cdot = \frac{\partial}{\partial x} + \frac{\partial}{\partial y} + \frac{\partial}{\partial z}$。散度算子作用于矢量，得到标量。
+$$
+{div} \mathbf(v) = \nabla \cdot \mathbf(v)
+$$
+
+发散分为正散和负散，正散是指矢量场从某一点向外发散，负散是指矢量场从某一点向内收敛（聚集）。
+
+散度定理又称为高斯散度定理、高斯公式，是指在矢量分析中，一个把矢量场通过曲面的流动与曲面内部的矢量场的表现联系起来的定理。
+$$
+\iint_{S} \mathbf{F} \cdot d\mathbf{S} = \iiint_{V} \nabla \cdot \mathbf{F} \, dV
+$$
+
+有限元方法就是利用基本插值方法得到空间各个节点处的值，常用的插值有Lagrange、Newton、Hermite插值。
+\begin{quote}
+    Largrange插值
+
+    $$
+    \_k(x) = \frac {\omega_{n+1}(x)} {(x - x_k)\omega_{n + 1}(x_k)}
+    $$
+    $$
+    \omega_{n+1}(x) = \prod_{k = 0, k \neq i}^{n} (x - x_k)
+    $$
+    $$
+    l_k(x_i) = \left\{ \begin{array}{ll}
+        1 &, i = k \\
+        0 &, i \neq k
+        \end{array} \right.
+    $$
+    $l_k(x)(k = 0,1,2,...,n)$称为$n$次Lagrange插值基函数。容易验证：
+    $$
+    p_n(x) = \sum_{k=0}^{n}y_k l_k(x)
+    $$
+\end{quote}
+
+在有限元方法中，基函数的选取是关键，不同基函数会导致不同的求解效果。常用的基函数包括线性基函数、二次基函数和三次基函数等，它们在不同维度下有不同的表达形式。这些基函数基于Lagrange插值函数构造，是有限元空间中任意函数的线性无关表示。
+
+
+\end{document}
